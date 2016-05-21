@@ -17,58 +17,23 @@ grad = zeros(size(theta));
 %               Compute the partial derivatives and set grad to the partial
 %               derivatives of the cost w.r.t. each parameter in theta
 
-%theta_zero = theta(1)
-
-%size(theta,2)
-
-%theta = theta(2:size(theta,2))
-
-%h_theta_zero = sigmoid( X * theta_zero )
-
+% Calculate H_theta(x)
 h_theta = sigmoid( X * theta );
 
-new_theta = theta(2:size(theta));
+% Return all vector elements except theta_0 (theta_1)
+_theta = theta(2:end);
 
-%size(new_theta)
+% Remove first element of vector theta
+norm_theta = [0;_theta];
 
-temp = [0;new_theta];
+% Calculate the Cost Function J
+J = (1/m) * sum ( -y' * log( h_theta ) - (1 - y)' * log (1 - h_theta) ) + lambda * (1 / (2 * m) ) * norm_theta' * norm_theta;
 
-temp' * temp
-
-%size(temp)
-
-%Cost Function J
-%J = (1/m) * sum ( -y' * log( h_theta ) - (1 - y)' * log (1 - h_theta) ) + lambda * (1 / (2 * m) ) * sum (theta .^ 2);
-
-J = (1/m) * sum ( -y' * log( h_theta ) - (1 - y)' * log (1 - h_theta) ) + lambda * (1 / (2 * m) ) * temp' * temp;
-
-%theta
-
-%(1 /m) * sum(sigmoid( X * theta ) - y) * X(:,1)'
-
-grad(1) = (1/m) *( h_theta - y )'  * X(:,1);
-
-(1/m) *( h_theta - y )'  * X + ( (lambda / m ) * theta )
-
- 
-
-
-#h_theta - y
-#size(y)
-#size(X(:,1))
-
-#X(:,1)' * y
-
-%(1 / m) * sum(sigmoid( X * theta ) - y) * X(2,2)
-
-%(1 / m) * sum(sigmoid( X * theta ) - y) * X(2,3)
-
-%(1 / m) * sum(sigmoid( X * theta ) - y) * X(2,:)
-
-%grad(2:size(theta)
-
-
-
+% Calculate Gradient
+% X(:,1) returns first Column of X matrix
+% X(:,2:end) returns from second column up to the end of X matrix.
+grad(1) = (1/m) *( h_theta - y )' * X(:,1);
+grad(2:end) = ( (1/m) *( h_theta - y )'  * X(:,2:end) ) + ( (lambda / m ) * theta(2:end)' );
 
 
 % =============================================================

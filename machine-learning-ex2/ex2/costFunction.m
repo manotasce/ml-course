@@ -20,14 +20,14 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+% Calculate H_theta(x)
 h_theta = sigmoid( X * theta );
 
+% Calculate the Cost Function J
 J = (1/m) * sum ( -y' * log( h_theta ) - (1 - y)' * log (1 - h_theta) );
 
+% Calculate Gradient
 grad = (1/m) * X' * ( h_theta - y) ;
-
-
-
 
 
 
